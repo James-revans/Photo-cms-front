@@ -1,0 +1,40 @@
+.home {
+    min-height: 100vh;
+    display: flex;
+    color: white;
+    &__category-buttons {
+        background: #4F8BFF;
+        max-width: 200px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 20px;
+        h2 {
+            padding: 40px 0;
+        }
+        button {
+            color: white;
+            display: block;
+            border: none;
+            border-bottom: solid thin transparent;
+            background: transparent;
+            margin-bottom: 40px;
+            padding: 10px;
+            font-size: 20px;
+            transition: 0.3s;
+            &:hover {
+                cursor: pointer;
+                border-color:white;
+            }
+            &:focus {
+                border-color:rgb(255, 255, 255);
+                border-width: 5px;
+                transition: 0.2s;
+            }
+        }
+    }
+
+    &__content {
+        width: 100%;
+    }
+}
+

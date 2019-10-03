@@ -1,0 +1,45 @@
+.image-blade {
+    border: solid thin gray;
+    border-radius: 5px;
+    margin: 10px auto;
+    position: relative;
+    max-width: 500px;
+    display: flex;
+
+    &__img {
+        padding: 8px;
+        text-align: left;
+        height: 75px;
+  
+    }
+
+    &__arrows {
+        position: absolute;
+        right: 10px;
+        top: 45%;
+        transform: translateY(-50%);
+        &__up, &__down {
+            border-left: solid 8px transparent;
+            border-bottom: solid 10px black;
+            border-right: solid 8px transparent;
+            border-top: 0;
+            margin: 25px 0;
+            transition: 0.2s;
+
+            &:hover {
+                cursor: pointer;
+                transform: scale(1.1);
+                transition: 0.2s;
+            }
+        }
+
+        &__down {
+            transform: rotate(180deg);
+            &:hover {
+                cursor: pointer;
+                transform: rotate(180deg) scale(1.1);
+                transition: 0.2s;
+            }
+        }
+    }
+}
