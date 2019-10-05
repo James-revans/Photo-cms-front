@@ -9,12 +9,13 @@ export class ImageList extends Component {
             <div className="image-lists">
                 <div className="image-lists__portraits">
                     {this.props.array.map((item, index) => (
-                        <ImageBlade item={item} key={index} index={index} category={this.props.category}/>
-                    ))}
+                        <ImageBlade item={item} key={index} index={index} array={this.props.array} category={this.props.category} onchangeOrder={this.props.onchangeOrder}/>
+                    ))} 
                 </div>
             </div>
-        )
+        ) 
     }
 }
+
 
 export default ImageList

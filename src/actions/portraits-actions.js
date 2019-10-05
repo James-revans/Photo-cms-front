@@ -3,13 +3,13 @@ const updatePortraitsAction = {
     payload: []
 };
 
-export const CHANGE_ORDER_UP = 'image:changeOrderUp'
+export const CHANGE_ORDER = 'array:changeOrder'
 
-export function changeOrderUp(image) {
-    // console.log('action');
+export function changeOrder(array) {
+    console.log('action');
     return {
-        type: CHANGE_ORDER_UP,
-        payload: []
+        type: CHANGE_ORDER,
+        payload: array
     }
 }
 

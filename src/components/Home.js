@@ -3,23 +3,22 @@ import '../styles/Home.scss';
 import ImageList from './ImageList';
 import UploadImage from './UploadImage';
 import { connect } from 'react-redux';
+import { changeOrder } from '../actions/portraits-actions';
 
 
 export class Home extends Component {
     state = {
         selected: 'portraits',
         photoArray: []
-
     }
 
     constructor(props) {
         super(props);
             this.changeSelected = this.changeSelected.bind(this);
-
+            this.onchangeOrder = this.onchangeOrder.bind(this);
         }
-
     
-    changeSelected(select) {
+    changeSelected(select, index, direction) {
         this.setState({ selected: select });
 
         switch(select) {
@@ -42,17 +41,19 @@ export class Home extends Component {
             default:
                 return this.setState({ photoArray: this.props.portraits });
         }
+    }
 
-        // axios.get(`http://localhost:3000/photos/` + selected)
-        // .then(res => {
-        // const array = (res.data);
-        // const photoArray = [];
-        // array.forEach((element) => {
-        //     photoArray.push('http://localhost:3000/photos/' + selected + '/' + element.filename);
-        // });
-        // this.setState({ photoArray });
-        // this.setState({ selected });
-        // })
+    onchangeOrder(category, index, direction) {
+        if(index === 0) {
+            return
+        }
+        let oldArray = this.state.photoArray;
+        let b = oldArray[index];
+        oldArray[index] = oldArray[index + direction];
+        oldArray[index + direction] = b
+
+        this.props.onchangeOrder(oldArray);
+        return this.setState({ photoArray: oldArray });
     }
 
     render() {
@@ -68,14 +69,15 @@ export class Home extends Component {
                     <button onClick={() => this.changeSelected('recent')}>Recent</button>
                 </div>
                 <div className="home__content">
-                    <ImageList array={this.state.photoArray} category={this.state.selected}/>
+                    <ImageList array={this.state.photoArray} category={this.state.selected} onchangeOrder={this.onchangeOrder}/>
                     <UploadImage category={this.state.selected}/>
                 </div>
-                
             </div>
         )
     }
+
 }
+
 
 
 const mapStateToProps = state => ({
@@ -86,5 +88,9 @@ const mapStateToProps = state => ({
     recent: state.recent
 });
 
-export default connect(mapStateToProps) (Home)
+const mapActionsToProps = {
+    onchangeOrder: changeOrder
+};
+
+export default connect(mapStateToProps, mapActionsToProps) (Home)
 

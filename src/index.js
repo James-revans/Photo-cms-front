@@ -29,7 +29,7 @@ const allReducers = combineReducers({
 
 
 
-// Getting all the iamges from mongodb and placing them in the store
+// Getting all the images from mongodb and placing them in the store
 
 API_GET_PORTRAITS().then((response) => {
     updatePortraitsAction.payload = response;
