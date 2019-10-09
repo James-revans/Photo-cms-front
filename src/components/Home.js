@@ -3,58 +3,64 @@ import '../styles/Home.scss';
 import ImageList from './ImageList';
 import UploadImage from './UploadImage';
 import { connect } from 'react-redux';
-import { changeOrder } from '../actions/portraits-actions';
+import { changeOrder, updatePhotosAction } from '../actions/photos-actions';
+import axios from 'axios';
 
 
 export class Home extends Component {
     state = {
-        selected: 'portraits',
+        selected: 'portrait',
         photoArray: []
     }
 
     constructor(props) {
         super(props);
             this.changeSelected = this.changeSelected.bind(this);
-            this.onchangeOrder = this.onchangeOrder.bind(this);
+            // this.saveAlbum = this.saveAlbum.bind(this);
+            this.deleteItem = this.deleteItem.bind(this);
         }
     
     changeSelected(select, index, direction) {
-        this.setState({ selected: select });
-
-        switch(select) {
+        const API_GET_PHOTOS = new Promise((resolve, reject) => {
             
-            case 'portraits':
+            //Make the call 
+            axios.get(`http://localhost:3000/images/` + select)
+                .then((response) => {
+                    resolve(response.data);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+            }
+        )
+        API_GET_PHOTOS.then(
+            response => {
+                this.props.onupdatePhotosAction(response)
                 this.setState({ selected: select });
-                return this.setState({ photoArray: this.props.portraits });
-            case 'family':
-                this.setState({ selected: select });
-                return this.setState({ photoArray: this.props.family });
-            case 'events':
-                this.setState({ selected: select });
-                return this.setState({ photoArray: this.props.events });
-            case 'misc':
-                this.setState({ selected: select });
-                return this.setState({ photoArray: this.props.misc });
-            case 'recent':
-                this.setState({ selected: select });
-                return this.setState({ photoArray: this.props.recent });
-            default:
-                return this.setState({ photoArray: this.props.portraits });
-        }
+            },
+            err => this.props.onupdatePhotosAction(err)
+        )
     }
 
-    onchangeOrder(category, index, direction) {
-        if(index === 0) {
-            return
-        }
+    deleteItem(index) {
+        // on click, this deletes the image from mongoDB on refreshing the page
+        // updates store with new array
+
+        axios.delete(`http://localhost:3000/delete/` + this.state.selected + '/' + this.state.photoArray[index].filename)
+        .then(function (response) {
+            console.log(response);
+        })
+            .catch(function (error) {
+            console.log(error);
+        });
+
         let oldArray = this.state.photoArray;
-        let b = oldArray[index];
-        oldArray[index] = oldArray[index + direction];
-        oldArray[index + direction] = b
-
+        oldArray.splice(index, 1);        
         this.props.onchangeOrder(oldArray);
+
         return this.setState({ photoArray: oldArray });
-    }
+    }   
+
 
     render() {
 
@@ -62,34 +68,29 @@ export class Home extends Component {
             <div className="home">
                 <div className="home__category-buttons">
                     <h2>Albums</h2>
-                    <button onClick={() => this.changeSelected('portraits')}>Portraits</button>
+                    <button onClick={() => this.changeSelected('portrait')}>Portraits</button>
                     <button onClick={() => this.changeSelected('family')}>Family</button>
                     <button onClick={() => this.changeSelected('events')}>Events</button>
                     <button onClick={() => this.changeSelected('misc')}>Misc</button>
                     <button onClick={() => this.changeSelected('recent')}>Recent</button>
                 </div>
                 <div className="home__content">
-                    <ImageList array={this.state.photoArray} category={this.state.selected} onchangeOrder={this.onchangeOrder}/>
-                    <UploadImage category={this.state.selected}/>
+                    <ImageList category={this.state.selected} deleteItem={this.deleteItem}/>
+                    <UploadImage localUpload={this.localUpload} category={this.state.selected}/>
+                    <button onClick={() => this.saveAlbum()} className="home__content__save-button">Save Album</button>
                 </div>
             </div>
         )
     }
-
 }
 
-
-
 const mapStateToProps = state => ({
-    portraits: state.portraits,
-    family: state.family,
-    events: state.events,
-    misc: state.misc,
-    recent: state.recent
+    photos: state.photos
 });
 
 const mapActionsToProps = {
-    onchangeOrder: changeOrder
+    onchangeOrder: changeOrder,
+    onupdatePhotosAction: updatePhotosAction
 };
 
 export default connect(mapStateToProps, mapActionsToProps) (Home)
