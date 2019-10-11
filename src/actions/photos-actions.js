@@ -1,5 +1,4 @@
 export const updatePhotosAction = (array) => {
-    console.log(array);
     return {
         type: 'updatePhotos',
         payload: array

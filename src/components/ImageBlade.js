@@ -12,7 +12,6 @@ export class ImageBlade extends Component {
     constructor(props) {
         super(props)
         // this.onchangeOrder = this.onchangeOrder.bind(this);
-
     }
     
     onchangeOrder(category, index, direction) {
@@ -33,7 +32,7 @@ export class ImageBlade extends Component {
     render() {
         return (
             <div className="image-blade">
-                <img className="image-blade__img" src={'http://localhost:3000/images/' + this.props.category + '/' + this.props.item.filename} alt="sg"></img>
+                <img className="image-blade__img" src={this.props.item.image_url} alt="sg"></img>
                 <div className="image-blade__delete"><button onClick={() => this.setState({ confirm_delete: true })}><FontAwesomeIcon icon={faTrashAlt}/></button></div>
                 { this.state.confirm_delete && 
                     <div className="image-blade__delete-modal">
@@ -42,10 +41,7 @@ export class ImageBlade extends Component {
                         <button onClick={() => this.setState({ confirm_delete: false })}>cancel</button>
                     </div>
                 };
-                {/* <div className="image-blade__arrows">
-                    <div onClick={() => this.onchangeOrder(this.props.category, this.props.index, -1)} className="image-blade__arrows__up"></div>
-                    <div onClick={() => this.onchangeOrder(this.props.category, this.props.index, 1)} className="image-blade__arrows__down"></div>
-                </div> */}
+
             </div>
         )
     }

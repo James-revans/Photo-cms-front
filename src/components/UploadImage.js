@@ -21,7 +21,7 @@ export class UploadImage extends Component {
             form_data.append('files', image, image.name);
         })
 
-        let url = 'http://localhost:3000/upload' + this.props.category;
+        let url = 'http://localhost:3000/uploadimage/' + this.props.category;
 
         axios.post(url, form_data, {
           headers: {
@@ -32,7 +32,7 @@ export class UploadImage extends Component {
               console.log(res.data);
             })
             .catch(err => console.log(err))
-      };
+      }
 
     render() {
         return (

@@ -6,17 +6,15 @@ import { connect } from 'react-redux';
 import { changeOrder, updatePhotosAction } from '../actions/photos-actions';
 import axios from 'axios';
 
-
 export class Home extends Component {
     state = {
         selected: 'portrait',
-        photoArray: []
     }
 
     constructor(props) {
         super(props);
             this.changeSelected = this.changeSelected.bind(this);
-            // this.saveAlbum = this.saveAlbum.bind(this);
+            this.saveAlbum = this.saveAlbum.bind(this);
             this.deleteItem = this.deleteItem.bind(this);
         }
     
@@ -43,23 +41,41 @@ export class Home extends Component {
     }
 
     deleteItem(index) {
-        // on click, this deletes the image from mongoDB on refreshing the page
-        // updates store with new array
+        // This will remove the image and update the store with the action onchangeorder
+        // This will not remove the image from mongodb or cloudinary
+        let newArray = [...this.props.photos];
+        newArray.splice(index, 1);        
+        this.props.onchangeOrder(newArray);
 
-        axios.delete(`http://localhost:3000/delete/` + this.state.selected + '/' + this.state.photoArray[index].filename)
+    }   
+
+    saveAlbum() {
+        let newArray = []
+        this.props.photos.forEach(element => {
+            newArray.push({image_url: element.image_url, album: element.album})
+        });
+        JSON.stringify(newArray)
+
+
+        axios.delete(`http://localhost:3000/delete/` + this.state.selected)
         .then(function (response) {
             console.log(response);
+
+            axios.post('http://localhost:3000/savealbum', newArray, {
+                headers: {
+                  'content-type': 'application/json'
+                }
+              })
+            .then(res => {
+                console.log(res.data);
+            })
+            .catch(err => console.log(err))
+
         })
             .catch(function (error) {
             console.log(error);
         });
-
-        let oldArray = this.state.photoArray;
-        oldArray.splice(index, 1);        
-        this.props.onchangeOrder(oldArray);
-
-        return this.setState({ photoArray: oldArray });
-    }   
+    }
 
 
     render() {
