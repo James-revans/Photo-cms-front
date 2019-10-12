@@ -3,6 +3,7 @@ import '../styles/ImageBlade.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
+import changeOrder from '../actions/photos-actions'
 
 
 export class ImageBlade extends Component {
@@ -11,23 +12,17 @@ export class ImageBlade extends Component {
     }
     constructor(props) {
         super(props)
-        // this.onchangeOrder = this.onchangeOrder.bind(this);
+        this.deleteItem = this.deleteItem.bind(this)
     }
+
+    deleteItem(index) {
+        // This will remove the image and update the store with the action onchangeorder
+        // This will not remove the image from mongodb or cloudinary
+        let newArray = [...this.props.photos];
+        newArray.splice(index, 1);        
+        this.props.onchangeOrder(newArray); 
+    }   
     
-    onchangeOrder(category, index, direction) {
-        // let newArray = [...this.props.photos]
-        // if((index === 0 && direction === -1) || (index === newArray.length-1 && direction === 1)) {
-        //     return
-        // }
-        // let a = newArray[index + direction];
-        // let b = newArray[index];
-        
-        // newArray[index] = a;
-        // newArray[index + direction] = b
-        
-        // this is action for portraits
-        // this.props.onchangeOrder(newArray);
-    }
 
     render() {
         return (
@@ -37,7 +32,7 @@ export class ImageBlade extends Component {
                 { this.state.confirm_delete && 
                     <div className="image-blade__delete-modal">
                         <h3>Are you sure you want to delete this image?</h3>
-                        <button onClick={() => {this.props.deleteItem(this.props.index); this.setState({ confirm_delete: false })}}>delete</button>
+                        <button onClick={() => {this.deleteItem(this.props.index); this.setState({ confirm_delete: false })}}>delete</button>
                         <button onClick={() => this.setState({ confirm_delete: false })}>cancel</button>
                     </div>
                 };
@@ -51,8 +46,9 @@ const mapStateToProps = state => ({
     photos: state.photos
 });
 
-// const mapActionsToProps = {
-//     onchangeOrder: changeOrder
-// };
+const mapActionsToProps = {
+    onchangeOrder: changeOrder,
+}
 
-export default connect (mapStateToProps) (ImageBlade)
+
+export default connect (mapStateToProps, mapActionsToProps) (ImageBlade)
