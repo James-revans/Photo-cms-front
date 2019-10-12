@@ -28,23 +28,34 @@ export class UploadImage extends Component {
             form_data.append('files', image, image.name);
         })
         
-        let url = 'http://localhost:3000/uploadimage/' + this.props.category;
-        axios.post(url, form_data, {
-          headers: {
-            'content-type': 'multipart/form-data'
-          }
-        })
+        axios.post('http://localhost:3000/api/uploadimage/' + this.props.category, form_data, {headers: {'content-type': 'multipart/form-data'}})
         .then(response => {
-          return axios.get(`http://localhost:3000/images/` + this.props.category)
-        })
-        .then(response => {
-          this.props.onchangeOrder(response)
-          this.setState({isUploading: false})
-        })
+          axios.get(`http://localhost:3000/api/images/` + this.props.category)
+          
 
+        const API_GET_PHOTOS = new Promise((resolve, reject) => {
+            
+          //Make the call 
+          axios.get(`http://localhost:3000/api/images/` + this.props.category)
+              .then((response) => {
+                  resolve(response.data);
+              })
+              .catch((error) => {
+                  reject(error);
+              });
+          }
+        )
+        API_GET_PHOTOS.then(
+            response => {
+                this.props.onchangeOrder(response)
+            },
+            err => this.props.onchangeOrder(err)
+        )
+        .then(this.setState({isUploading: false}))
         .catch(error => {
           console.log(error)
         });
+        })
       }
 
     render() {

@@ -28,7 +28,7 @@ export class Home extends Component {
         const API_GET_PHOTOS = new Promise((resolve, reject) => {
             
             //Make the call 
-            axios.get(`http://localhost:3000/images/` + select)
+            axios.get(`http://localhost:3000/api/images/` + select)
                 .then((response) => {
                     resolve(response.data);
                 })
@@ -56,15 +56,14 @@ export class Home extends Component {
             });
             JSON.stringify(newArray)
 
-            axios.delete(`http://localhost:3000/delete/` + this.state.selected)
+            axios.delete(`http://localhost:3000/api/delete/` + this.state.selected)
                 .then(response => {
-                    axios.post('http://localhost:3000/savealbum', newArray, {headers: {'content-type': 'application/json'}}) 
+                    axios.post('http://localhost:3000/api/savealbum', newArray, {headers: {'content-type': 'application/json'}}) 
                 })
                 .then(response => {
                     setTimeout(() => {
                         this.setState({isSaving: false})
-                    }, 600)
-                    
+                    }, 600)  
                 })
                 .catch(err => {
                     console.log(err);
