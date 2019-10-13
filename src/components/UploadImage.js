@@ -28,15 +28,15 @@ export class UploadImage extends Component {
             form_data.append('files', image, image.name);
         })
         
-        axios.post('http://localhost:3000/api/uploadimage/' + this.props.category, form_data, {headers: {'content-type': 'multipart/form-data'}})
+        axios.post('http://localhost:3000/api/image/' + this.props.category, form_data, {headers: {'content-type': 'multipart/form-data'}})
         .then(response => {
-          axios.get(`http://localhost:3000/api/images/` + this.props.category)
+          axios.get(`http://localhost:3000/api/image/` + this.props.category)
           
 
         const API_GET_PHOTOS = new Promise((resolve, reject) => {
             
           //Make the call 
-          axios.get(`http://localhost:3000/api/images/` + this.props.category)
+          axios.get(`http://localhost:3000/api/image/` + this.props.category)
               .then((response) => {
                   resolve(response.data);
               })
