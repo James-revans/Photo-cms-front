@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import '../styles/Home.scss';
-import ImageList from './ImageList';
-import UploadImage from './UploadImage';
+import '../../styles/Home.scss';
+import ImageList from '../ImageList';
+import UploadImage from '../UploadImage';
 import { connect } from 'react-redux';
-import { changeOrder, updatePhotosAction } from '../actions/photos-actions';
+import { changeOrder, updatePhotosAction } from '../../actions/photos-actions';
 import axios from 'axios';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'

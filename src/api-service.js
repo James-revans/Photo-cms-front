@@ -1,5 +1,6 @@
-// import axios from 'axios';
+import axios from 'axios';
 
+let token = ''
 // const API_GET_PHOTOS = () => {
 //     return new Promise(
 //         (resolve, reject) => {
@@ -16,7 +17,4 @@
 //     )
 // }
 
-// export {
-//     API_GET_PHOTOS,
 
-// }
