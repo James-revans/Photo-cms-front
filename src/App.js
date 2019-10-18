@@ -14,20 +14,30 @@ export default function App() {
   return (
     <Router>
       <div>
+        {window.localStorage.token ?
+        (<Home />)
+        :
+        (<Auth />)
+        }
 
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-        <Switch>
-        <Route path="/">
-            <Auth />
-          </Route>
-          <Route path="/home">
-            <Home />
-          </Route>
-        </Switch>
+
       </div>
     </Router>
   );
 }
+
+
+{/* <Switch>
+<Route path="/">
+  
+
+  </Route>
+  <Route path="/home">
+    
+
+  </Route>
+</Switch> */}
 
 

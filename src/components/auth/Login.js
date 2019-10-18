@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
-import '../../styles/Auth-form.scss'
+import React, { Component } from 'react';
+import '../../styles/Auth-form.scss';
 import axios from 'axios';
+import qs from 'querystring';
 
 
 export default class Login extends Component {
@@ -20,6 +21,7 @@ export default class Login extends Component {
         this.setState({
             email: evt.target.value
         }); 
+        console.log(this.state.email)
     }
 
     updatePasswordValue = (evt) => {
@@ -30,19 +32,30 @@ export default class Login extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        // let form_data = new FormData();
-        // form_data.set('email', this.state.email);
-        // form_data.set('password', this.state.password);
-        axios.post('localhost:3000/api/login', {
+
+        const config = {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        axios.post('http://localhost:3000/api/login', {
             email: this.state.email,
             password: this.state.password
-        })
-        .then(function (response) {
-            console.log(response);
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+        }, config)
+        .then((result) => {
+            // Do somthing
+            console.log(result)
+            if(result.data.token) {
+                localStorage.setItem("token", result.data.token)
+                localStorage.setItem("user", this.state.email)
+                window.location.reload()
+            }
+
+          })
+          .catch((err) => {
+            // Do somthing
+            console.log(err)
+          })
       }
     render() {
         return (

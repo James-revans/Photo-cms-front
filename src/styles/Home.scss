@@ -2,6 +2,9 @@
     min-height: 100vh;
     display: flex;
     color: white;
+    &__log-out:hover {
+        cursor: pointer;
+    }
     &__category-buttons {
         background: #4F8BFF;
         max-width: 200px;
