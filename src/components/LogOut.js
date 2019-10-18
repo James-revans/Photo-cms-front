@@ -1,19 +1,17 @@
 import React from 'react'
 
 const buttonStyle = {
-    position: 'absolute',
-    top: '5%',
-    right: '5%',
     color: 'black',
+    margin: '0 auto',
     background: 'none',
     fontSize: '15px',
     border: 'none',
+    paddingRight: '2px'
+
 }
 
 export default function LogOut() {
     return (
-        <div>
-            <button onClick={() => {window.localStorage.clear(); window.location.reload()}} style={buttonStyle} className="home__log-out">Log Out</button>
-        </div>
+        <button onClick={() => {window.localStorage.clear(); window.location.reload()}} style={buttonStyle} className="home__log-out">Log Out</button>
     )
 }

@@ -3,11 +3,29 @@
     border-bottom-left-radius: 1px;
     border-bottom-right-radius: 1px;
     padding: 20px 0;
+
+
+
     p {
         color: white;
         text-align: center;
         font-size: 20px;
     }
+
+    &__password-check {
+        display: block;
+        width: 80%;
+        margin: 0 auto;
+        text-align: center;
+        background: rgb(255, 208, 208);
+        border: solid thin rgb(255, 139, 139);
+        border-radius: 5px;
+        color: rgb(187, 0, 0);
+        font-size: 15px;
+        font-weight: 400;
+        padding: 2%;
+    }
+
     form {
         input {
             display: block;
@@ -35,6 +53,9 @@
                 color: white;
                 transition: 0.2s;
             }
+        }
+        @media (max-width: 767px) {
+            height: 80vh;
         }
     }
 }

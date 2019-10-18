@@ -2,15 +2,36 @@
     min-height: 100vh;
     display: flex;
     color: white;
-    &__log-out:hover {
-        cursor: pointer;
+    @media (max-width: 767px) {
+        display: inline;
     }
+    &__log-out {
+        width: 66px;
+        height: 20px;
+        position: absolute; 
+        top: 5%;
+        right: 5%;
+        text-align: center;
+        padding-bottom: 5px;
+
+        &:hover {
+            cursor: pointer;
+            border-bottom: solid thin black;
+
+        }
+    }
+    
+
     &__category-buttons {
         background: #4F8BFF;
         max-width: 200px;
         padding-left: 20px;
         padding-right: 20px;
         padding-top: 20px;
+        @media (max-width: 767px) {
+            max-width: 100%;
+            text-align: center;
+        }
         h2 {
             padding: 40px 0;
         }
@@ -24,6 +45,12 @@
             padding: 10px;
             font-size: 20px;
             transition: 0.3s;
+            @media (max-width: 767px) {
+                max-width: 100%;
+                text-align: center;
+                margin: 10px auto;
+                padding-bottom: 20px;
+            }
             &:hover {
                 cursor: pointer;
                 border-color:white;
@@ -37,7 +64,8 @@
     }
 
     &__content {
-        width: 100%;
+        width: 90%;
+        margin: 0 auto;
         &__save-button {
             width: 100%;
             max-width: 500px;

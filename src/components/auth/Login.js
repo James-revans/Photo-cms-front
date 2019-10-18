@@ -7,7 +7,8 @@ import qs from 'querystring';
 export default class Login extends Component {
     state = {
         email: '',
-        password: ''
+        password: '',
+        isLoginWrong: false
     }
 
     constructor(props) {
@@ -31,6 +32,7 @@ export default class Login extends Component {
     }
 
     handleSubmit = (e) => {
+        this.setState({isLoginWrong: false})
         e.preventDefault();
 
         const config = {
@@ -55,12 +57,15 @@ export default class Login extends Component {
           .catch((err) => {
             // Do somthing
             console.log(err)
+            this.setState({isLoginWrong: true})
           })
       }
     render() {
         return (
             <div className="auth-form">
-                <p>Login to an existing user account</p>
+                <p>Login to an existing account</p>
+                {this.state.isLoginWrong && <h6 className="auth-form__password-check">Username or password is incorrect.</h6>}
+
                 <form onSubmit={this.handleSubmit}>
                     <input type="email" id="email" placeholder="Email" value={this.state.email} onChange={this.updateEmailValue}></input>
                     <input type="password" id="password" placeholder="Password" value={this.state.password} onChange={this.updatePasswordValue}></input>

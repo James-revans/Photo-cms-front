@@ -1,13 +1,21 @@
 .auth {
-    max-width: 500px;
-    margin: 0 auto;
-    margin-top: 5%;
-    height: 90vh;
+    // margin-top: 5%;
 
     .auth-form-wrapper {
         box-shadow: 0px 5px 12px 10px rgb(230, 230, 230);
-    }
+        margin: 5% auto;
+        max-width: 500px;
 
+        @media (max-width: 767px) {
+            margin-top: 0;
+        }
+
+    }
+    &__form-content {
+        @media (max-width: 767px) {
+            height: 100%;
+        }
+    }
     &__buttons {
         position: relative;
         margin: 0 auto;
