@@ -29,7 +29,7 @@ export class Home extends Component {
         const API_GET_PHOTOS = new Promise((resolve, reject) => {
             
             //Make the call 
-            axios.get(`http://localhost:3000/api/image/` + select + `/` + window.localStorage.getItem('user'))
+            axios.get(`https://photo-cms.herokuapp.com/api/image/` + select + `/` + window.localStorage.getItem('user'))
                 .then((response) => {
                     resolve(response.data);
                 })
@@ -56,9 +56,9 @@ export class Home extends Component {
                 newArray.push({image_url: element.image_url, album: element.album, order: index++})
             });
             JSON.stringify(newArray)
-            axios.delete(`http://localhost:3000/api/save/` + this.state.selected, {headers: {'Authorization': "bearer " + window.localStorage.getItem('token')}})
+            axios.delete(`https://photo-cms.herokuapp.com/api/save/` + this.state.selected, {headers: {'Authorization': "bearer " + window.localStorage.getItem('token')}})
                 .then(response => {
-                    axios.post('http://localhost:3000/api/save/' + this.state.selected, newArray, {headers: {'content-type': 'application/json', 'Authorization': "bearer " + window.localStorage.getItem('token')}}) 
+                    axios.post('https://photo-cms.herokuapp.com/api/save/' + this.state.selected, newArray, {headers: {'content-type': 'application/json', 'Authorization': "bearer " + window.localStorage.getItem('token')}}) 
                 })
                 .then(response => {
                     setTimeout(() => {

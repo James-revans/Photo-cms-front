@@ -28,7 +28,7 @@ export class UploadImage extends Component {
             form_data.append('files', image, image.name);
         })
         
-        axios.post('http://localhost:3000/api/image/' + this.props.category, 
+        axios.post(`https://photo-cms.herokuapp.com/api/image/` + this.props.category, 
         form_data, 
         {headers: 
           {
@@ -37,13 +37,13 @@ export class UploadImage extends Component {
           }
         })
         .then(response => {
-          axios.get(`http://localhost:3000/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
+          axios.get(`https://photo-cms.herokuapp.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
           
 
         const API_GET_PHOTOS = new Promise((resolve, reject) => {
             
           //Make the call 
-          axios.get(`http://localhost:3000/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
+          axios.get(`https://photo-cms.herokuapp.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
               .then((response) => {
                   resolve(response.data);
               })

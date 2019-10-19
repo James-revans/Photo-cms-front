@@ -40,7 +40,7 @@ export default class Login extends Component {
               'Content-Type': 'application/json',
             },
           }
-        axios.post('http://localhost:3000/api/login', {
+        axios.post('https://photo-cms.herokuapp.com/api/login', {
             email: this.state.email,
             password: this.state.password
         }, config)
