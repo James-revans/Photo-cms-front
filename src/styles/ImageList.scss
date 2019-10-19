@@ -1,0 +1,15 @@
+.image-list {
+    max-width: 40vw;
+    margin: auto;
+    &__photo {
+        background: rgb(255, 255, 255);
+        width: 100%;
+        max-width: 40vw;
+        margin: 10px auto;
+
+    }
+}
+
+.placeholder {
+    opacity: 0;
+}
