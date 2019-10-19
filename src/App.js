@@ -1,13 +1,43 @@
 import React from 'react';
 import './App.scss';
-import Home from './components/Home';
+import Home from './components/views/Home';
+import Auth from './components/views/Auth'
 
-function App() {
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route,
+//   Link
+// } from "react-router-dom";
+
+export default function App() {
   return (
-    <div className="App">
-      <Home/>
-    </div>
+    // <Router>
+      <div>
+        {window.localStorage.token ?
+        (<Home />)
+        :
+        (<Auth />)
+        }
+
+        {/* A <Switch> looks through its children <Route>s and
+            renders the first one that matches the current URL. */}
+
+      </div>
+    // </Router>
   );
 }
 
-export default App;
+
+{/* <Switch>
+<Route path="/">
+  
+
+  </Route>
+  <Route path="/home">
+    
+
+  </Route>
+</Switch> */}
+
+
