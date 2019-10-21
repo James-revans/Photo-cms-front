@@ -7,7 +7,7 @@
     box-shadow: 0px 3px 10px 1px rgb(216, 216, 216); 
 
     &:hover {
-        cursor: pointer;
+        cursor: grab;
     }
     &__img {
         padding: 8px;
@@ -71,22 +71,57 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        max-width: 600px;
-        background: white;
+        width: 280px;
+        background: rgb(247, 247, 247);
         color: black;
         z-index: 1000;
         box-shadow: 0px 0px 8px 2px rgb(214, 214, 214);
         border-radius: 5px;
         padding: 10px;
         padding-top: 0;
-
-        button {
-            font-size: 16px;
-            margin: 5px;
-    
-            &:hover {
-                cursor: pointer; 
-            }
+        &:hover {
+            cursor: auto; 
         }
+
+        &__buttons {
+            display: flex;
+            justify-content: space-between;
+            &:hover {
+                cursor: auto; 
+            }
+            button {
+                font-size: 16px;
+                margin: 5px;
+                background: none;
+                border: solid thin black;
+                padding: 5px 10px;
+                border-radius: 2px;
+        
+                &:hover {
+                    cursor: pointer; 
+                }
+            }    
+            .delete {
+                button {
+                    background: rgba(192, 0, 0, 0.603);
+                    color: white;
+                    border: none;
+                    &:hover {
+                        background: rgba(156, 0, 0, 0.603);
+                    }
+                }
+            }       
+            .cancel {
+                button {
+                    background: rgba(128, 128, 128, 0.548);
+                    color: white;
+                    border: none;
+                    &:hover {
+                        background: rgba(104, 104, 104, 0.548);
+                    }
+                }
+            }  
+        }
+
     }
 }

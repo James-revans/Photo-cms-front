@@ -32,8 +32,11 @@ export class ImageBlade extends Component {
                 { this.state.confirm_delete && 
                     <div className="image-blade__delete-modal">
                         <h3>Are you sure you want to delete this image?</h3>
-                        <button onClick={() => {this.deleteItem(this.props.index); this.setState({ confirm_delete: false })}}>delete</button>
-                        <button onClick={() => this.setState({ confirm_delete: false })}>cancel</button>
+                        <div className="image-blade__delete-modal__buttons">
+                            <div className="delete"><button onClick={() => {this.deleteItem(this.props.index); this.setState({ confirm_delete: false })}}>Delete</button></div>
+                            <div className="cancel"><button onClick={() => this.setState({ confirm_delete: false })}>Cancel</button></div>
+                        </div>
+
                     </div>
                 };
 
