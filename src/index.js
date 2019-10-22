@@ -6,10 +6,12 @@ import App from './App';
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import photosReducer from './reducers/photos-reducer';
+import mongoReducer from './reducers/mongo-reducer';
 
 
 const allReducers = combineReducers({
     photos: photosReducer,
+    mongoPhotos: mongoReducer
 }) 
 
 

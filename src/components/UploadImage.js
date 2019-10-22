@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import Loader from 'react-loader-spinner'
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import { changeOrder } from '../actions/photos-actions';
+import { updateMongo } from '../actions/mongo-actions';
 import imageCompression from 'browser-image-compression';
 
 
@@ -61,31 +62,31 @@ export class UploadImage extends Component {
         // GET request that will display the photos once they have been uploaded to cloudinary and mongodb
         .then(response => {
           // axios.get(`https://photo-cms.herokuapp.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
-          
-        const API_GET_PHOTOS = new Promise((resolve, reject) => {
             
-          //Make the call 
-          axios.get(`https://photo-cms.herokuapp.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
-              .then((response) => {
-                  resolve(response.data);
-              })
-              .catch((error) => {
-                  reject(error);
-              });
-          }
-        )
-        API_GET_PHOTOS.then(
-            response => {
-                this.props.onchangeOrder(response)
-            },
-            err => this.props.onchangeOrder(err)
-        )
-        .then(this.setState({isUploading: false}))
-        .catch(error => {
-          console.log(error)
-        });
+          const API_GET_PHOTOS = new Promise((resolve, reject) => {
+              
+            //Make the call 
+            axios.get(`https://photo-cms.herokuapp.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
+                .then((response) => {
+                    resolve(response.data);
+                })
+                .catch((error) => {
+                    reject(error);
+                });
+            }
+          )
+          API_GET_PHOTOS.then(
+              response => {
+                  this.props.onchangeOrder(response)
+                  this.props.onupdateMongo(response)
+              },
+              err => this.props.onchangeOrder(err)
+          )
+          .then(this.setState({isUploading: false}))
+          .catch(error => {
+            console.log(error)
+          });
         })
-
 
         .catch(function (error) {
           console.log(error.message);
@@ -116,11 +117,13 @@ export class UploadImage extends Component {
 }
 
 const mapStateToProps = state => ({
-  photos: state.photos
+  photos: state.photos,
+  mongoPhotos: state.mongoPhotos
 })
 
 const mapActionsToProps = {
-  onchangeOrder: changeOrder
+  onchangeOrder: changeOrder,
+  onupdateMongo: updateMongo
 }
 
 export default connect(mapStateToProps, mapActionsToProps) (UploadImage)

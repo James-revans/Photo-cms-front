@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import { connect } from 'react-redux'
 import changeOrder from '../actions/photos-actions'
+import axios from 'axios'
 
 
 export class ImageBlade extends Component {
@@ -17,10 +18,18 @@ export class ImageBlade extends Component {
 
     deleteItem(index) {
         // This will remove the image and update the store with the action onchangeorder
-        // This will not remove the image from mongodb or cloudinary
-        let newArray = [...this.props.photos];
-        newArray.splice(index, 1);        
-        this.props.onchangeOrder(newArray); 
+
+
+        axios.delete(`https://photo-cms.herokuapp.com/api/delete`, {headers: {'Authorization': "bearer " + window.localStorage.getItem('token')}, data: {photo: this.props.photos[index]}})
+        .then(response => {
+            console.log(response)
+            let newArray = [...this.props.photos];
+            newArray.splice(index, 1);        
+            this.props.onchangeOrder(newArray); 
+        })
+        .catch(err => {
+            console.log(err);
+        });
     }   
     
 
