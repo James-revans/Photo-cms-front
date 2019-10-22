@@ -4,6 +4,7 @@ import ImageList from '../ImageList';
 import UploadImage from '../UploadImage';
 import { connect } from 'react-redux';
 import { changeOrder, updatePhotosAction } from '../../actions/photos-actions';
+import { updateMongo } from '../../actions/mongo-actions';
 import axios from 'axios';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 import Loader from 'react-loader-spinner'
@@ -28,7 +29,7 @@ export class Home extends Component {
 
         const API_GET_PHOTOS = new Promise((resolve, reject) => {
             
-            //Make the call 
+            //Make the call     
             axios.get(`https://photo-cms.herokuapp.com/api/image/` + select + `/` + window.localStorage.getItem('user'))
                 .then((response) => {
                     resolve(response.data);
@@ -41,6 +42,7 @@ export class Home extends Component {
         API_GET_PHOTOS.then(
             response => {
                 this.props.onupdatePhotosAction(response)
+                this.props.onupdateMongo(response)
                 this.setState({ selected: select });
             },
             err => this.props.onupdatePhotosAction(err)
@@ -48,14 +50,15 @@ export class Home extends Component {
     }
 
     saveAlbum() {
-        if(this.props.photos.length >= 1) {
+        if(this.props.photos.length >= 0) {
             this.setState({isSaving: true})
             let newArray = []
             let index = 0
             this.props.photos.forEach(element => {
-                newArray.push({image_url: element.image_url, album: element.album, order: index++})
+                newArray.push({image_url: element.image_url, album: element.album, order: index++, public_id: element.public_id})
             });
             JSON.stringify(newArray)
+            console.log(this.props.photos, this.props.mongoPhotos)
             axios.delete(`https://photo-cms.herokuapp.com/api/save/` + this.state.selected, {headers: {'Authorization': "bearer " + window.localStorage.getItem('token')}})
                 .then(response => {
                     axios.post('https://photo-cms.herokuapp.com/api/save/' + this.state.selected, newArray, {headers: {'content-type': 'application/json', 'Authorization': "bearer " + window.localStorage.getItem('token')}}) 
@@ -83,6 +86,7 @@ export class Home extends Component {
                     <button onClick={() => this.changeSelected('events')}>Events</button>
                     <button onClick={() => this.changeSelected('misc')}>Misc</button>
                     <button onClick={() => this.changeSelected('recent')}>Recent</button>
+                    <button onClick={() => this.changeSelected('banners')}>Banners</button>
                 </div>
                 <div className="home__content">
 
@@ -99,7 +103,7 @@ export class Home extends Component {
                     (<div>
                         <ImageList category={this.state.selected} deleteItem={this.deleteItem}/>
                         <UploadImage localUpload={this.localUpload} category={this.state.selected}/>
-                        <button onClick={() => this.saveAlbum()} className="home__content__save-button">Save Album</button>
+                        <button onClick={() => this.saveAlbum()} className="home__content__save-button">Save Order</button>
                     </div>)
                     }
                     
@@ -110,12 +114,14 @@ export class Home extends Component {
 }
 
 const mapStateToProps = state => ({
-    photos: state.photos
+    photos: state.photos,
+    mongoPhotos: state.mongoPhotos
 });
 
 const mapActionsToProps = {
     onchangeOrder: changeOrder,
-    onupdatePhotosAction: updatePhotosAction
+    onupdatePhotosAction: updatePhotosAction,
+    onupdateMongo: updateMongo
 };
 
 export default connect(mapStateToProps, mapActionsToProps) (Home)
