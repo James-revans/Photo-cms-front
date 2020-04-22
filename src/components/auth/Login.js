@@ -2,13 +2,16 @@ import React, { Component } from 'react';
 import '../../styles/Auth-form.scss';
 import axios from 'axios';
 import qs from 'querystring';
+import Loader from 'react-loader-spinner'
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 
 
 export default class Login extends Component {
     state = {
         email: '',
         password: '',
-        isLoginWrong: false
+        isLoginWrong: false,
+        isLoading: false,
     }
 
     constructor(props) {
@@ -32,6 +35,7 @@ export default class Login extends Component {
     }
 
     handleSubmit = (e) => {
+        this.setState({isLoading: true})
         this.setState({isLoginWrong: false})
         e.preventDefault();
 
@@ -52,26 +56,46 @@ export default class Login extends Component {
                 localStorage.setItem("user", this.state.email)
                 window.location.reload()
             }
-
+            this.setState({isLoading: false})
           })
           .catch((err) => {
             // Do somthing
             console.log(err)
+            this.setState({isLoading: false})
             this.setState({isLoginWrong: true})
           })
       }
     render() {
         return (
-            <div className="auth-form">
-                <p>Login to an existing account</p>
-                {this.state.isLoginWrong && <h6 className="auth-form__password-check">Username or password is incorrect.</h6>}
+            <React.Fragment>
+                {this.state.isLoading && 
+                    <div className="login-loader">
+                        <div className="login-loader__icon">
+                            <Loader
+                                type="TailSpin"
+                                color="black"
+                                height={100}
+                                width={100}
+                            />
+                        </div>
+                    </div>
+                }
+                <div className="auth-form">
+                    <React.Fragment>
+                        <p>Login to an existing account</p>
+                        {this.state.isLoginWrong && <h6 className="auth-form__password-check">Username or password is incorrect.</h6>}
+                    
+                        <form onSubmit={this.handleSubmit}>
+                            <input type="email" id="email" placeholder="Email" value={this.state.email} onChange={this.updateEmailValue}></input>
+                            <input type="password" id="password" placeholder="Password" value={this.state.password} onChange={this.updatePasswordValue}></input>
+                            <button type="submit" id="submit" value="Submit">Submit</button>
+                        </form>
 
-                <form onSubmit={this.handleSubmit}>
-                    <input type="email" id="email" placeholder="Email" value={this.state.email} onChange={this.updateEmailValue}></input>
-                    <input type="password" id="password" placeholder="Password" value={this.state.password} onChange={this.updatePasswordValue}></input>
-                    <button type="submit" id="submit" value="Submit">Submit</button>
-                </form>
-            </div>
+                    </React.Fragment>
+                </div>
+            </React.Fragment>
+
+
         )
     }
 

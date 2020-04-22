@@ -59,3 +59,20 @@
         }
     }
 }
+
+.login-loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(238, 238, 238, 0.521);
+    text-align: center;
+
+    &__icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
