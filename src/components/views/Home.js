@@ -30,7 +30,7 @@ export class Home extends Component {
         const API_GET_PHOTOS = new Promise((resolve, reject) => {
             
             //Make the call     
-            axios.get(`https://photo-cms2.herokuapp.com/api/image/` + select + `/` + window.localStorage.getItem('user'))
+            axios.get(`https://photo-cms-api.onrender.com/api/image/` + select + `/` + window.localStorage.getItem('user'))
                 .then((response) => {
                     resolve(response.data);
                 })
@@ -59,9 +59,9 @@ export class Home extends Component {
             });
             JSON.stringify(newArray)
             console.log(this.props.photos, this.props.mongoPhotos)
-            axios.delete(`https://photo-cms2.herokuapp.com/api/save/` + this.state.selected, {headers: {'Authorization': "bearer " + window.localStorage.getItem('token')}})
+            axios.delete(`https://photo-cms-api.onrender.com/api/save/` + this.state.selected, {headers: {'Authorization': "bearer " + window.localStorage.getItem('token')}})
                 .then(response => {
-                    axios.post('https://photo-cms2.herokuapp.com/api/save/' + this.state.selected, newArray, {headers: {'content-type': 'application/json', 'Authorization': "bearer " + window.localStorage.getItem('token')}}) 
+                    axios.post('https://photo-cms-api.onrender.com/api/save/' + this.state.selected, newArray, {headers: {'content-type': 'application/json', 'Authorization': "bearer " + window.localStorage.getItem('token')}}) 
                 })
                 .then(response => {
                     setTimeout(() => {

@@ -51,7 +51,7 @@ export class UploadImage extends Component {
       postData(form_data) {
         console.log('posting')
         // POST request to endpoint that will upload the image to mongodb and cloudinary with the authorization token
-        axios.post(`https://photo-cms2.herokuapp.com/api/image/` + this.props.category, 
+        axios.post(`https://photo-cms-api.onrender.com/api/image/` + this.props.category, 
         form_data, 
         {headers: 
           {
@@ -66,7 +66,7 @@ export class UploadImage extends Component {
           const API_GET_PHOTOS = new Promise((resolve, reject) => {
               
             //Make the call 
-            axios.get(`https://photo-cms2.herokuapp.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
+            axios.get(`https://photo-cms-api.onrender.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
                 .then((response) => {
                     resolve(response.data);
                 })
@@ -142,7 +142,7 @@ export default connect(mapStateToProps, mapActionsToProps) (UploadImage)
 //       form_data.append('files', image, image.name);
 //   })
   
-//   axios.post(`https://photo-cms2.herokuapp.com/api/image/` + this.props.category, 
+//   axios.post(`https://photo-cms-api.onrender.com/api/image/` + this.props.category, 
 //   form_data, 
 //   {headers: 
 //     {
@@ -151,13 +151,13 @@ export default connect(mapStateToProps, mapActionsToProps) (UploadImage)
 //     }
 //   })
 //   .then(response => {
-//     axios.get(`https://photo-cms2.herokuapp.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
+//     axios.get(`https://photo-cms-api.onrender.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
     
 
 //   const API_GET_PHOTOS = new Promise((resolve, reject) => {
       
 //     //Make the call 
-//     axios.get(`https://photo-cms2.herokuapp.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
+//     axios.get(`https://photo-cms-api.onrender.com/api/image/` + this.props.category + `/` + window.localStorage.getItem('user'))
 //         .then((response) => {
 //             resolve(response.data);
 //         })

@@ -20,7 +20,7 @@ export class ImageBlade extends Component {
         // This will remove the image and update the store with the action onchangeorder
 
 
-        axios.delete(`https://photo-cms2.herokuapp.com/api/delete`, {headers: {'Authorization': "bearer " + window.localStorage.getItem('token')}, data: {photo: this.props.photos[index]}})
+        axios.delete(`https://photo-cms-api.onrender.com/api/delete`, {headers: {'Authorization': "bearer " + window.localStorage.getItem('token')}, data: {photo: this.props.photos[index]}})
         .then(response => {
             console.log(response)
             let newArray = [...this.props.photos];

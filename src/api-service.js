@@ -6,7 +6,7 @@ let token = ''
 //         (resolve, reject) => {
     
 //             //Make the call 
-//             axios.get(`https://photo-cms2.herokuapp.com/api/images`)
+//             axios.get(`https://photo-cms-api.onrender.com/api/images`)
 //                 .then((response) => {
 //                     resolve(response.data);
 //                 })

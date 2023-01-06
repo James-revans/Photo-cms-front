@@ -48,14 +48,14 @@ export default class Create extends Component {
                 'Content-Type': 'application/json',
                 },
             }
-            axios.post('https://photo-cms2.herokuapp.com/api/signup', {
+            axios.post('https://photo-cms-api.onrender.com/api/signup', {
                 email: this.state.email,
                 password: this.state.password
             }, config)
             .then((result) => {
                 // Do somthing
                 console.log(result)
-                axios.post('https://photo-cms2.herokuapp.com/api/login', {
+                axios.post('https://photo-cms-api.onrender.com/api/login', {
                     email: this.state.email,
                     password: this.state.password
                 }, config)
